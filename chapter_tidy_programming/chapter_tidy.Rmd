@@ -1,8 +1,8 @@
 ---
-title: "ScPoProgramming"
-subtitle: "`R` Tidyverse"
-author: "Florian Oswald"
-date: "SciencesPo Paris </br> `r Sys.Date()`"
+title: "Adminstrative Data Lab"
+subtitle: "`R` Cleaning, Visualizing, Summarizing"
+author: "Ruggero Doino"
+date: "Ruggero Doino (DIME 3) </br> `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     chakra: "https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"
@@ -20,7 +20,7 @@ output:
 
 layout: true
 
-<div class="my-footer"><img src="../img/logo/ScPo-shield.png" style="height: 60px;"/></div> 
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
 ---
 
