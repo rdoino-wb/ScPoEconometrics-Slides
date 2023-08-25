@@ -22,7 +22,7 @@ pre {
 }
 
 a, a > code {
-  color: #d90502;
+  color: #009FDA;
   text-decoration: none;
 
 }
@@ -115,10 +115,23 @@ a, a > code {
   width: 48%;
 }
 
+.pull-left-narrow {
+  float: left;
+  width: 20%;
+}
+
 .pull-right {
   float: right;
   width: 48%;
 }
+
+.pull-right-wide {
+  float: right;
+  width: 80%;
+}
+
+/* Clear floats after the columns */
+.pull-right-wide + * { clear: both; }
 
 .pull-right ~ * {
   clear: both;
@@ -158,7 +171,7 @@ blockquote {
 
 /* changing background image to ScPo*/
 .title-slide {
-  background-image: url("../img/logo/ScPo-econ.png");
+  background-image: url("../img/logo/WBG_Vertical-RGB-high.png");
   background-position: 9% 30%;
   background-size: 300px;
   background-color: #fff;
@@ -167,7 +180,7 @@ blockquote {
 
 /* H1 fonts */
 .title-slide h1 {
-  color: #515151;
+  color:#002244;
   padding-top: 250px;
   font-weight: normal;
   font-size: 45px;
@@ -180,7 +193,7 @@ blockquote {
 
 /* H2 fonts */
 .title-slide h2 {
-  color: #d90502;
+  color: #009FDA;
   font-size: 35px;
   text-align: left;
   text-shadow: none;
@@ -221,7 +234,7 @@ blockquote {
 
 /* section divider red */
 .title-slide-section-red {
-  background-color: #d90502;
+  background-color: #009FDA;
   padding-left: 100px;  /* delete this for 4:3 aspect ratio */
   link-color
 }
@@ -264,7 +277,7 @@ blockquote {
 
 
 .title-slide-final h1 {
-  color: #d90502;
+  color: #009FDA;
 }
 
 
@@ -281,11 +294,11 @@ blockquote {
 
 /* Make bold syntax compile to ScPo-red */
 strong {
-  color: #d90502;
+  color: #009FDA;
 }
 
 .ScPored {
-  color: #d90502;
+  color: #009FDA;
 }
 
 /* Add blue tag */
@@ -316,7 +329,7 @@ strong {
 
 /* Color adjustments to headers */
 h1 {
-  color: #d90502;
+  color: #009FDA;
 }
 
 h3 {
@@ -335,7 +348,7 @@ ru-blockquote {
   margin-bottom: 1em;
   margin-left: 40px;
   margin-right: 40px;
-  border-left: solid 10px #d90502;
+  border-left: solid 10px #009FDA;
   background-color: #818181;
   padding: 1em;
   color: #fff;

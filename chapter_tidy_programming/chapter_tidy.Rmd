@@ -2,7 +2,7 @@
 title: "Adminstrative Data Lab"
 subtitle: "`R` Cleaning, Visualizing, Summarizing"
 author: "Ruggero Doino"
-date: "Ruggero Doino (DIME 3) </br> `r Sys.Date()`"
+date: "World Bank - DIME 3 </br> `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     chakra: "https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"

@@ -1,8 +1,8 @@
 ---
-title: "ScPoEconometrics"
-subtitle: "Differences-in-Differences"
-author: "Florian Oswald, Gustave Kenedi and Pierre Villedieu"
-date: "SciencesPo Paris </br> `r Sys.Date()`"
+title: "Think Large, Dive Deep: Mastering Administrative Data"
+subtitle: "Designing, Manipulating and Visualizing"
+author: "Ruggero Doino"
+date: "DIME 3 </br> `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -19,7 +19,7 @@ output:
 
 layout: true
 
-<div class="my-footer"><img src="../img/logo/ScPo-shield.png" style="height: 60px;"/></div> 
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
 ---
 
