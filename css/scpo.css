@@ -44,19 +44,30 @@ a, a > code {
 
 /* color tweak */
 .inverse {
-  background-color: #ffebf0;
+  background-color: #e6e9f6;
   color: #353632;
   text-shadow: none;
+  text-align: left;
 }
 
 /* slightly spacing change */
 .inverse h1, .inverse h2, .inverse h3 {
   color: #0729a6;
   line-height: 1.0em;
+  text-align: left;
 }
 
 .inverse remark-code-line {
   background-color: #e0e1df;
+  text-align: left;
+  font-size: 0.8em !important; /* Adjust this value to your liking */
+}
+
+.inverse remark-code {
+  text-align: left !important;
+  font-size: 0.8em !important; /* Adjust this value to your liking */
+  display: block; /* To make the inline code block-like */
+  white-space: pre; /* To respect spaces in the code */
 }
 
 /* Two-column layout (slightly wider for aspect ration) */
@@ -132,10 +143,7 @@ a, a > code {
 
 /* Clear floats after the columns */
 .pull-right-wide + * { clear: both; }
-
-.pull-right ~ * {
-  clear: both;
-}
+.pull-right + * { clear: both; }
 
 img, video, iframe {
   max-width: 100%;
@@ -237,6 +245,13 @@ blockquote {
   background-color: #009FDA;
   padding-left: 100px;  /* delete this for 4:3 aspect ratio */
   link-color
+}
+
+.logo-bottom-left {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 100px;  /* adjust this to the size you want */
 }
 
 /* section divider red H1 fonts */
@@ -358,3 +373,10 @@ ru-blockquote {
 
 .large { font-size: 120% }
 .small { font-size: 90% }
+
+.remark-code {
+  text-align: left !important;
+  font-size: 0.5em !important; /* Adjust this value to your liking */
+  display: block; /* To make the inline code block-like */
+  white-space: pre; /* To respect spaces in the code */
+}

@@ -17,15 +17,19 @@ output:
       in_header: "../libs/partials/header.html"
 ---
 
+background-image: "../img/logo/WBG_Vertical-RGB-high.png"
+background-position: bottom left
+background-size: 110px 120px
 layout: true
-
-<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
 ---
 
 ```{r setup, include=FALSE,warning=FALSE,message=FALSE}
 library(data.table)
 library(dplyr)
+library(microbenchmark)
+library(ggplot2)
+
 
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
@@ -83,6 +87,8 @@ class: title-slide-section-red, middle
 
 ---
 
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
 # Pacakges we all use daily 
 
 .pull-left-narrow[.center[<img src="../img/logo/dplyr.png" width="125px"/>]]
@@ -95,8 +101,7 @@ Tyding, Manipulating and Merging
 .pull-left-narrow[.center[<img src="../img/logo/magrittr.svg" width="65px"/>]]
 
 .pull-right-wide[
-- The wonder tool ` %>% `...
-- ... but you will see me using ` |> ` `r emo::ji("exploding head")`
+- The wonder tool ` %>% `... but you will see me using ` |> ` `r emo::ji("exploding head")`
 ]
 
 --
@@ -104,7 +109,7 @@ Tyding, Manipulating and Merging
 .pull-left-narrow[.center[<img src="../img/logo/lubridate.png" width="65px"/>]]
 
 .pull-right-wide[
-Makes dating fun
+Makes [dating](https://lubridate.tidyverse.org/) fun
 ]
 
 --
@@ -112,7 +117,7 @@ Makes dating fun
 .pull-left-narrow[.center[<img src="../img/logo/stringr.png" width="65px"/>]]
 
 .pull-right-wide[
-Makes texting fun
+Makes [texting](https://stringr.tidyverse.org/) fun
 ]
 
 --
@@ -120,7 +125,7 @@ Makes texting fun
 .pull-left-narrow[.center[<img src="../img/logo/ggplot2.svg" width="65px"/>]]
 
 .pull-right-wide[
-Makes visualizing fun
+Makes [visualizing](https://ggplot2-book.org/) fun
 ]
 
 --
@@ -128,18 +133,17 @@ Makes visualizing fun
 .pull-left-narrow[.center[<img src="../img/logo/fixest.png" width="65px"/>]]
 
 .pull-right-wide[
-Makes regressing fun
+Makes [regressing](https://cran.r-project.org/web/packages/fixest/vignettes/fixest_walkthrough.html/) fun ([STATA users](https://stata2r.github.io/fixest/#installation/)) - [faster](https://github.com/skhiggins/R_guide) than any other R, STATA and Python packages! 
 ]
 
 ---
+
 class: title-slide, top, left, inverse
 background-image: url("../img/logo/einsteinoppenheimer.jpg")
 background-size: cover
 
 ---
-
 layout: true
-
 <div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
 # Why Aren't You Using data.table Yet?
@@ -152,39 +156,13 @@ layout: true
 
 ---
 
-1) Concise
-These two code chunks do the same thing:
-
-# library(dplyr) ## Already loaded
-# data(starwars, package = "dplyr") ## Optional to bring the DF into the global env
-starwars %>% 
-  filter(species=="Human") %>% 
-  group_by(homeworld) %>% 
-  summarise(mean_height=mean(height))
-vs
-
-# library(data.table) ## Already loaded
-starwars_dt = as.data.table(starwars)
-starwars_dt[species=="Human", mean(height), by=homeworld]
-
 .right-wide[
+
 These two code chunks do the same thing:
 
 **Dplyr**
 
-```{r, echo=FALSE}
-# library(dplyr) ## Already loaded
-# data(starwars, package = "dplyr") ## Optional to bring the DF into the global env
-
-starwars %>% 
-  filter(species=="Human") %>% 
-  group_by(homeworld) %>% 
-  summarise(mean_height=mean(height))
-```
-
-**Dplyr**
-
-```{r, echo=FALSE}
+```{r, echo = T,results = "hide"}
 # library(dplyr)
 # data(starwars, package = "dplyr")
 
@@ -196,7 +174,9 @@ starwars %>%
 
 vs
 
-```{r, echo=FALSE}
+**Data.Table**
+
+```{r, echo = T,results = "hide"}
 # library(data.table)
 
 starwars_dt = as.data.table(starwars)
@@ -208,216 +188,45 @@ starwars_dt[species=="Human", mean(height), by=homeworld]
 
 ---
 
-.right-wide[
-*Example:* Which polls had a sample size of at least 2,000 people?
-]
-
-.right-wide[
-```{r, eval=FALSE}
-polls_us_election_2016 #<<
-```
-
-```{r, echo=FALSE}
-polls_us_election_2016 #<<
-```
-]
-
----
-
-.right-wide[
-*Example:* Which polls had a sample size of at least 2,000 people?
-]
-
-.right-wide[
-```{r, eval=FALSE}
-polls_us_election_2016 %>%
-  filter(samplesize > 2000) #<<
-```
-
-```{r, echo=FALSE}
-polls_us_election_2016 %>%
-  filter(samplesize > 2000)
-```
-]
-
----
-
-.right-wide[
-Standard suite of comparison operators:
-- `>`: greater than,
-- `<`: smaller than,
-- `>=`: greater than or equal to,
-- `<=`: smaller than or equal to,
-- `!=`: not equal to,
-- `==`: equal to.
-
-Logical operators:
-1. `x & y`: `x` **and** `y`
-1. `x | y`: `x` **or** `y`
-1. `!y`: **not** `y`
-]
-
----
-
-.right-wide[
-`R` has the convenient `x %in% y` operator (conversely `!(x %in% y)`), `TRUE` if `x` is *a member of* `y`.
-```{r, echo = TRUE}
-3 %in% 1:3
-c(2,5) %in% 2:10  # also vectorized
-c("S","Po") %in% c("Sciences","Po")  # also strings
-```
-]
-
----
-
-.right-wide[
-*Example:* Which A graded poll with at least 2,000 people had Trump win at least 45% of the vote?
-]
-
----
-
-.right-wide[
-*Example:* Which A graded poll with at least 2,000 people had Trump win at least 45% of the vote?
-]
-
-.right-wide[
-```{r, eval=FALSE}
-polls_us_election_2016 #<<
-```
-
-```{r, echo=FALSE}
-polls_us_election_2016 #<<
-```
-]
-
----
-
-.right-wide[
-*Example:* Which A graded poll with at least 2,000 people had Trump win at least 45% of the vote?
-]
-
-.right-wide[
-```{r, eval=FALSE}
-polls_us_election_2016 %>%
-  filter(grade == "A" & samplesize > 2000 & rawpoll_trump > 45) #<<
-```
-
-```{r, echo=FALSE}
-polls_us_election_2016 %>%
-  filter(grade == "A" & samplesize > 2000 & rawpoll_trump > 45)
-```
-]
-
----
-
 layout: true
-
 <div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
-# Why should You Use data.table?
+# Why Aren't You Using data.table Yet?
 
 .left-thin[
 
 ### Coincise
-
-### Create new variable(s)
-
-```r
-mutate()
-```
-
-]
-
----
-
-.right-wide[
-*Example:* What was
-1. the combined vote share of Trump and Clinton for each poll?
-2. the difference between Trump's raw poll vote share and 538's adjusted vote share?
-]
-
----
-
-.right-wide[
-*Example:* What was
-1. the combined vote share of Trump and Clinton for each poll?
-2. the difference between Trump's raw poll vote share and 538's adjusted vote share?
-]
-
-.right-wide[
-```{r, eval=FALSE}
-polls_us_election_2016
-```
-
-```{r, echo=FALSE}
-polls_us_election_2016
-```
-]
-
----
-
-.right-wide[
-*Example:* What was
-1. the combined vote share of Trump and Clinton for each poll?
-2. the difference between Trump's raw poll vote share and 538's adjusted vote share?
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  mutate(trump_clinton_tot = rawpoll_trump + rawpoll_clinton, #<<
-         trump_raw_adj_diff = rawpoll_trump - adjpoll_trump) #<<
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  mutate(trump_clinton_tot = rawpoll_trump + rawpoll_clinton,
-         trump_raw_adj_diff = rawpoll_trump - adjpoll_trump)
-```
-]
-
----
-
-.right-wide[
-*Example:* What was
-1. the combined vote share of Trump and Clinton for each poll?
-2. the difference between Trump's raw poll vote share and 538's adjusted vote share?
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  mutate(trump_clinton_tot = rawpoll_trump + rawpoll_clinton,
-         trump_raw_adj_diff = rawpoll_trump - adjpoll_trump) %>%
-  names() #<<
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  mutate(trump_clinton_tot = rawpoll_trump + rawpoll_clinton,
-         trump_raw_adj_diff = rawpoll_trump - adjpoll_trump) %>%
-  names()
-```
-]
-
----
-
-layout: true
-
-<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
-
-# Why should You Use data.table?
-
-.left-thin[
-
-### Coincise
-
 ### Insanely fast
 
-### Memory efficient
+]
 
-```r
-select()
+---
+
+.right-wide[
+
+```{r, echo = T, results = "hide"}
+# library(dplyr)
+# library(data.table)
+# library(microbenchmark)
+# library(ggplot2)
+
+# 1. Generate a sample data frame
+set.seed(123)
+n_rows <- 1e5
+sample_data <- data.frame(
+  id = sample(1:1000, n_rows, replace = TRUE),
+  value = rnorm(n_rows)
+)
+sample_dt <- as.data.table(sample_data)
+
+# 2. Use microbenchmark to measure the time taken
+n_replications <- 1000
+benchmark_results <- microbenchmark(
+  dplyr_group_by = sample_data %>% group_by(id) %>% summarise(mean_value = mean(value)),
+  data_table_by = sample_dt[, .(mean_value = mean(value)), by = id],
+  times = n_replications
+)
+
 ```
 
 ]
@@ -425,61 +234,13 @@ select()
 ---
 
 .right-wide[
-*Example:* Only keep the variables `state, startdate, enddate, pollster, rawpoll_clinton, rawpoll_trump`
-]
 
----
+Take a look at this!
 
-.right-wide[
-*Example:* Only keep the variables `state, startdate, enddate, pollster, rawpoll_clinton, rawpoll_trump`
-]
+.center[<img src="../img/logo/Rplot.png" width="1250px"/>]
 
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016
-```
+Imagine getting back nearly <b>a third of your time</b>. That's what you would experience on average `r emo::ji("smiling face with sunglasses")`
 
-```{r, echo = FALSE}
-polls_us_election_2016
-```
-]
-
----
-
-.right-wide[
-*Example:* Only keep the variables `state, startdate, enddate, pollster, rawpoll_clinton, rawpoll_trump`
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  select(state,startdate,enddate,pollster,rawpoll_clinton,rawpoll_trump) #<<
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  select(state,startdate,enddate,pollster,rawpoll_clinton,rawpoll_trump)
-```
-]
-
----
-
-.right-wide[
-*Example:* Only keep the variables `state, startdate, enddate, pollster, rawpoll_clinton, rawpoll_trump`
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  select(state,startdate,enddate,pollster,rawpoll_clinton,rawpoll_trump) %>%
-  names() #<<
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  select(state,startdate,enddate,pollster,rawpoll_clinton,rawpoll_trump) %>%
-  names()
-```
 ]
 
 ---
@@ -488,62 +249,20 @@ layout: true
 
 <div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
-# Why should You Use data.table?
+# Why Aren't You Using data.table Yet?
 
 .left-thin[
 
 ### Coincise
-
 ### Insanely fast
-
-### Select
-
-### Feature rich (and stable)
-
-```r
-summarise()
-```
+### Memory efficient 
 
 ]
 
 ---
 
 .right-wide[
-*Example:* What is the maximum vote share for Trump?
-]
-
----
-
-.right-wide[
-*Example:* What is the maximum vote share for Trump?
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016
-```
-]
-
----
-
-.right-wide[
-*Example:* What is the maximum vote share for Trump?
-]
-
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  summarise(max_trump = max(rawpoll_trump)) #<<
-```
-
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  summarise(max_trump = max(rawpoll_trump))
-```
+Diving into [memory usage](https://stackoverflow.com/questions/61376970/data-table-vs-dplyr-memory-use-revisited/61376971#61376971) can get a bit tricky. But, if you want the scoop on how data.table handles it, take a look [here](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://jangorecki.gitlab.io/r-talks/2019-06-18_Poznan_why-data.table/why-data.table.pdf)!
 ]
 
 ---
@@ -552,130 +271,722 @@ layout: true
 
 <div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
 
-# Why should You Use data.table?
+
+# Why Aren't You Using data.table Yet?
 
 .left-thin[
 
 ### Coincise
-
 ### Insanely fast
+### Memory efficient 
+### Feature rich and Dependency
 
-### Select
+]
 
-### Feature rich (and stable)
+---
 
-### Dependency free
+I'll group these points because they're all about how your code holds up over time. But let me highlight this about [dependencies](https://www.tinyverse.org/):
 
-```r
-group_by()
+
+```{r datatable, echo = T}
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+tools::package_dependencies("data.table", recursive = TRUE)[[1]]
 ```
 
-]
+
+```{r dplyr, echo = T}
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+tools::package_dependencies("dplyr", recursive = TRUE)[[1]]
+```
 
 ---
 
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
-]
+layout: true
+class: middle, center
 
 ---
 
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
+# Did I convince you about data.table?
+
+--
+
+----
+
+.pull-left[
+This is not a full course on Data.Table (unfortunately) ...
 ]
 
-.right-wide[
+--
+
+.pull-right[
+<iframe src="https://giphy.com/embed/pPhyAv5t9V8djyRFJH" width="380" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/wtf-obama-wth-pPhyAv5t9V8djyRFJH"></a></p>
+]
+
+--
+
+.pull-right-narrow[
+... but I will solve exercises using both dplyr and data.table side by side!
+]
+
+--
+
+.center[
+<iframe src="https://giphy.com/embed/MNmyTin5qt5LSXirxd" width="400" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/theoffice-MNmyTin5qt5LSXirxd"></a></p>
+]
+
+---
+layout: true
+class: middle, center
+
+---
+
+# In the meantime
+
+----
+
+.pull-left[
+<iframe src="https://giphy.com/embed/emLs5klEWTKlSVeexj" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/voice-actor-jeff-bergman-jeffbergman-emLs5klEWTKlSVeexj"></a></p>
+]
+.pull-right[
+- .left[[Introductory course](https://raw.githack.com/floswald/lectures/master/05-datatable/05-datatable.html) by Professor [Florian Oswald](https://floswald.github.io/) (SciencesPo) and Professor [Grant Mc Dermott](https://grantmcdermott.com/)]
+- .left[The [full handbook](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html): 99% of you all neeed to know about the package]
+- .left[[Package Documentation](https://cran.r-project.org/web/packages/data.table/index.html)]
+- .left[[CheatSheet](https://github.com/Rdatatable/data.table#cheatsheets)]
+- .left[Really nice, side-by-side [comparisons](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/) of common data.table and dplyr operations]
+]
+
+---
+layout: true
+class: middle, center
+
+---
+
+# In the meantime
+
+----
+
+.pull-left[
+<iframe src="https://giphy.com/embed/emLs5klEWTKlSVeexj" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/voice-actor-jeff-bergman-jeffbergman-emLs5klEWTKlSVeexj"></a></p>
+]
+.pull-right[
+- .left[<span style="background-color: yellow;"> [Introductory course](https://raw.githack.com/floswald/lectures/master/05-datatable/05-datatable.html) by Professor [Florian Oswald](https://floswald.github.io/) (SciencesPo) and Professor [Grant Mc Dermott](https://grantmcdermott.com/)</span>]
+- .left[The [full handbook](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html): 99% of you all neeed to know about the package]
+- .left[[Package Documentation](https://cran.r-project.org/web/packages/data.table/index.html)]
+- .left[[CheatSheet](https://github.com/Rdatatable/data.table#cheatsheets)]
+- .left[<span style="background-color: yellow;"> Really nice, side-by-side [comparisons](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/) of common data.table and dplyr operations]</span>]
+
+---
+
+class: inverse
+
+# Task 1: Load the Packages
+
+.left[We start loading all the necessary packages and set up]
+
 ```{r, eval = FALSE}
-polls_us_election_2016
+# 0: Setting R ----
+    
+    # Clean the workspace
+    rm(list=ls()) 
+    # Free Unused R memory
+    gc()
+    # Options for avoid scientific notation
+    options(scipen = 9999)
+    # Set the same seed
+    set.seed(123)
+    # list of package needed
+    packages <- 
+      c( 
+        "data.table",
+        "dplyr",
+        "stringr",
+        "lubridate",
+        "ggplot2"
+      )
+    # If the package is not installed, then install it 
+    if (!require("pacman")) install.packages("pacman")
+    # Load the packages 
+    pacman::p_load(packages, character.only = TRUE, install = TRUE)
+
+# 1: Setting Working Directories ----
+        
+  # Setting path
+  if (Sys.getenv("USER") == "ruggerodoino") { # RA (World Bank-DIME)
+    print("Ruggero has been selected")
+    dropbox_dir  <- "/Users/ruggerodoino/Dropbox/ChilePaymentProcurement/Reproducible-Package" 
+    github_dir   <- "/Users/ruggerodoino/Documents/GitHub/chile-payment-procurement/Reproducible-Package" 
+  }
 ```
+
+---
+
+class: inverse
+
+# Task 1: Load the Packages
+
+.left[We start loading all the necessary packages and set up]
+
+```{r, eval = FALSE}
+# 0: Setting R ----
+    
+    # Clean the workspace
+    rm(list=ls()) 
+    # Free Unused R memory
+    gc()
+    # Options for avoid scientific notation
+    options(scipen = 9999)
+    # Set the same seed
+    set.seed(123)
+    # list of package needed
+    packages <- 
+      c( 
+        "data.table",
+        "dplyr",
+        "stringr",
+        "lubridate",
+        "ggplot2"
+      )
+    # If the package is not installed, then install it 
+    if (!require("pacman")) install.packages("pacman")
+    # Load the packages 
+    pacman::p_load(packages, character.only = TRUE, install = TRUE)
+
+# 1: Setting Working Directories ----
+        
+  # Setting path
+  if (Sys.getenv("USER") == "ruggerodoino") { # RA (World Bank-DIME)
+    print("Ruggero has been selected")
+    dropbox_dir  <- "/Users/ruggerodoino/Dropbox/ChilePaymentProcurement/Reproducible-Package"  #<<
+    github_dir   <- "/Users/ruggerodoino/Documents/GitHub/chile-payment-procurement/Reproducible-Package"  #<<
+  }
+```
+
+---
+
+class: inverse
+
+# Task 1: Load the Packages
 
 ```{r, echo = FALSE}
-polls_us_election_2016
+countdown(minutes = 2, top = 0)
 ```
+
+.left[We start loading all the necessary packages and set up]
+
+```{r, eval = FALSE}
+# 0: Setting R ----
+    
+    # Clean the workspace
+    rm(list=ls()) 
+    # Free Unused R memory
+    gc()
+    # Options for avoid scientific notation
+    options(scipen = 9999)
+    # Set the same seed
+    set.seed(123)
+    # list of package needed
+    packages <- 
+      c( 
+        "data.table",
+        "dplyr",
+        "stringr",
+        "lubridate",
+        "ggplot2"
+      )
+    # If the package is not installed, then install it 
+    if (!require("pacman")) install.packages("pacman")
+    # Load the packages 
+    pacman::p_load(packages, character.only = TRUE, install = TRUE)
+
+# 1: Setting Working Directories ----
+        
+  # Setting path
+  if (Sys.getenv("USER") == "ruggerodoino") { # RA (World Bank-DIME)
+    print("Ruggero has been selected")
+    dropbox_dir  <- "/Users/ruggerodoino/Dropbox/ChilePaymentProcurement/Reproducible-Package" #<<
+    github_dir   <- "/Users/ruggerodoino/Documents/GitHub/chile-payment-procurement/Reproducible-Package" #<<
+  }
+```
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Let's go `r emo::ji("woman climbing")`
+
+---
+class: middle, center
+
+# .center[Main Challenges of Administrative Data]
+
+--
+
+----
+
+.center[
+`r emo::ji("potable_water")` Data Source
+]
+
+--
+.center[
+`r emo::ji("world_map")` Data Structure
+]
+
+--
+
+.center[
+`r emo::ji("musical_notes")` Data Harmonization
+]
+
+--
+
+.center[
+`r emo::ji("chains")` Data Integration
+]
+
+--
+
+.center[
+`r emo::ji("warning")` Data inconsistencies and quality
+]
+
+--
+
+.center[
+`r emo::ji("twisted_rightwards_arrows")` Temporal Inconsistencies/Sample Unbalances
 ]
 
 ---
 
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
+layout: false
+class: title-slide-section-red, middle
+
+# Data Source `r emo::ji("potable_water")`
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Source 
+
+.pull-right-narrow[
+#### 1) Origin of Administrative Data
 ]
 
-.right-wide[
-```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) #<<
-```
+.pull-left-wide[
+  `r emo::ji("mag")` Administrative data primarily originate from the routine administrative processes of organizations and institutions. 
+    
+  `r emo::ji("note")` Tax records, health records, school enrollment data, social service records, and employment records.
+]
+
+--
+
+#### 2) Where to find them 
+
+.pull-left-wide[
+  `r emo::ji("classical_building")` The accessibility of administrative data largely depends on the policies of the data sources.
+    
+  `r emo::ji("globe_with_meridians")` Admin data is frequently sourced through web scraping to maintain reproducibility. --> two resources that can help: [beginner](https://statsandr.com/blog/web-scraping-in-r/) and [advanced](https://r4ds.hadley.nz/webscraping.html). 
+]
+
+---
+
+class: inverse
+
+# Task 2: Load the Datasets
 
 ```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade)
+countdown(minutes = 5, top = 0)
 ```
-]
 
----
+We first load the offer-level dataset:
 
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
-]
+.pull-left[
 
-.right-wide[
 ```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) %>%
-  class() #<<
-```
+# DATA.TABLE
 
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) %>%
-  class()
+# Load offer-level data
+data_offer <- fread(
+  input = file.path(raw_data, "offer_level.csv"),
+  encoding = "Latin-1",
+  stringsAsFactors = TRUE, 
+  colClasses = c("numeric", "character", "factor"), 
+  na.strings = c("N/A", "Unknown"),
+  showProgress = TRUE
+)
+
+
+
+#
 ```
 ]
 
----
-
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
-]
-
-.right-wide[
+.pull-right[
 ```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) #<<
-```
+# DPLYR
 
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade)
+# Load offer-level data
+data_offer <- file.path(raw_data, "offer_level.csv") %>%
+  read_csv(
+    col_types = cols(
+      .default = col_character(),
+      column_name_1 = col_double(),
+      column_name_2 = col_character(),
+      column_name_3 = col_factor()
+    ),
+    na = c("N/A", "Unknown"),
+    progress = TRUE,
+    locale = locale(encoding = "Latin-1")
+  )
+
 ```
 ]
 
----
+And, then we load the payment-level datasets:
 
-.right-wide[
-*Example:* What is the average vote share for Clinton by poll grade?
-]
+.pull-left[
 
-.right-wide[
 ```{r, eval = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) %>%
-  summarise(mean_vote_clinton = mean(rawpoll_clinton)) #<<
-```
+# DATA.TABLE
 
-```{r, echo = FALSE}
-polls_us_election_2016 %>%
-  group_by(grade) %>%
-  summarise(mean_vote_clinton = mean(rawpoll_clinton))
+# Load payment-level data
+data_offer <- fread(
+  input = file.path(raw_data, "payment_level.csv"),
+  encoding = "Latin-1",
+  stringsAsFactors = TRUE, 
+  colClasses = c("numeric", "character", "factor"), 
+  na.strings = c("N/A", "Unknown"),
+  showProgress = TRUE
+)
+
+
+
+#
 ```
+]
+
+.pull-right[
+```{r, eval = FALSE}
+# TYDIVERSE/DPLYR
+
+# Load payment-level data
+data_payment <- file.path(raw_data, "payment_level.csv") %>%
+  read_csv(
+    col_types = cols(
+      .default = col_character(),
+      column_name_1 = col_double(),
+      column_name_2 = col_character(),
+      column_name_3 = col_factor()
+    ),
+    na = c("N/A", "Unknown"),
+    progress = TRUE,
+    locale = locale(encoding = "Latin-1")
+  )
+
+```
+]
+
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Structure `r emo::ji("world_map")`
+
+---
+class: middle, center
+# Data Structure
+
+--
+
+.pull-left[
+Once I received a folder with 14 datasets and no information whatsoever...
+]
+
+--
+
+.pull-right[
+<iframe src="https://giphy.com/embed/pynZagVcYxVUk" width="280" height="180" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/the-office-michael-heartbreak-pynZagVcYxVUk"></a></p>
+]
+
+--
+
+.center[
+... so what do we do? 
+]
+
+--
+
+.center[
+`r emo::ji("arrows_counterclockwise")` Understand the administrative process
+]
+
+--
+
+.center[
+`r emo::ji("link")` Understand the data architecture built upon the administrative process
 ]
 
 ---
 
+layout: false
 
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/1_slide.jpg")
+background-size: cover
 
+---
 
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/2_slide.jpg")
+background-size: cover
 
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/3_slide.jpg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/4_slide.jpg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/5_slide.jpg")
+background-size: cover
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/6_slide.jpg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/7_slide.jpg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/8_slide.jpg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/9_slide.jpg")
+background-size: cover
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+
+]
+
+--
+
+.right-wide[
+`r emo::ji("pushpin")` "The unit of observation, sometimes referred to as the unit of measurement, is defined statistically as the “who” or “what” for which data are measured or collected."([Philip Sedgwick](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.bmj.com/content/bmj/348/bmj.g3840.full.pdf)) 
+]
+
+--
+
+.right-wide[
+`r emo::ji("light_bulb")` A unit of observation need to be <b>fully and uniquely identified by an ID</b> - create an appropriate ID variable accordingly if it does not yet exist.
+]
+
+--
+
+.right-wide[
+1. <i>What's our unit of observation?</i>
+2. <i>What's our ID?</i>
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+
+]
+
+--
+
+.right-wide[
+`r emo::ji("pushpin")` "The unit of analysis is defined statistically as the “who” or “what” for which information is analysed and conclusions are made." ([Philip Sedgwick](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.bmj.com/content/bmj/348/bmj.g3840.full.pdf))
+]
+
+--
+
+.right-wide[
+`r emo::ji("light_bulb")` Administrative data often encompass multiple levels of analysis, each corresponding to the various participants in the administrative procedure. 
+]
+
+--
+
+.right-wide[
+1. <i>What are all the potential units of analysis?</i>
+2. <i>What are their own IDs?</i>
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+--
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+
+--
+
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+
+--
+
+.center[<img src="../img/logo/diagram_1.svg" width="650px"/>]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+.center[<img src="../img/logo/diagram_2.svg" width="650px"/>]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+.center[<img src="../img/logo/diagram_3.svg" width="650px"/>]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+.center[<img src="../img/logo/diagram_4.svg" width="650px"/>]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+.center[<img src="../img/logo/diagram_5.svg" width="650px"/>]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Structure
+
+.left-thin[
+
+### Unit of Observation
+### Unit of Analysis
+### Mapping the Data
+
+]
+
+.right-wide[
+`r emo::ji("pushpin")` "Data flow charts allow the research team to visualize which datasets are needed in order to create the datasets that will finally be used for the analysis." ([DIME Analytics](https://dimewiki.worldbank.org/Data_Flow_Charts))
+]
+.right-wide[
+`r emo::ji("hammer")` Check this free [web-tool](https://www.lucidchart.com/pages/data-flow-diagram)!
+]
+.center[<img src="../img/logo/diagram_6.svg" width="650px"/>]
 
 
 
