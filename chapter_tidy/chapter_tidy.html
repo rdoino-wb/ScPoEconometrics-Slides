@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Ruggero Doino
 ]
 .date[
-### DIME 3 </br> 2023-08-28
+### DIME 3 </br> 2023-08-30
 ]
 
 ---
@@ -608,7 +608,7 @@ data_offer &lt;- fread(
   input = file.path(raw_data, "offer_level.csv"),
   encoding = "Latin-1",
   stringsAsFactors = TRUE, 
-  colClasses = c("numeric", "character", "factor"), 
+  colClasses = c(" |&gt; ", "character", "factor"), 
   na.strings = c("N/A", "Unknown"),
   showProgress = TRUE
 )
@@ -985,9 +985,606 @@ background-size: cover
 ]
 .center[&lt;img src="../img/logo/diagram_6.svg" width="650px"/&gt;]
 
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Harmonization 🎶
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/data_harmonization.jpeg")
+background-size: cover
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+--
+
+.right-wide[
+🏷 There are several &lt;b&gt;naming conventions&lt;/b&gt; [out there](https://bookdown.org/content/d1e53ac9-28ce-472f-bc2c-f499f18264a3/names.html). Here, we will follow the so-called "snake_case".
+  - These names are all lower case with underscore between the name. My name in &lt;i&gt;snake_case&lt;/i&gt; would be &lt;i&gt;ruggero_doino&lt;i/&gt;.
+]
+
+--
+
+.right-wide[
+📖 &lt;b&gt;Controlled Vocabulary&lt;/b&gt; "The basic idea of controlled vocabularies is to define upfront a set of words, phrases, or stubs with well-defined meanings which can be used to index information." ([Emily Redierer](https://emilyriederer.netlify.app/post/column-name-contracts/))
+]
+
+--
+
+.right-wide[
+.center[
+&lt;img src="https://i.imgflip.com/7xbz4n.jpg" width="320" height="160"/&gt;
+]
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+&lt;b&gt;Level 1: Measure Types&lt;/b&gt;:
+
+  - &lt;b&gt;id&lt;/b&gt;: Unique identified for an entity.
+  - &lt;b&gt;ind&lt;/b&gt;: Binary 0 or 1 indicator or an event occurrence
+  - &lt;b&gt;n&lt;/b&gt;: Count of quantity or event occurrence
+  - &lt;b&gt;amt&lt;/b&gt;: Sum-able real number amount. That is, any non-count amount that is “denominator-free”
+  - &lt;b&gt;val&lt;/b&gt;: Numeric variables that are not inherently sum-able
+  - &lt;b&gt;dt&lt;/b&gt;: Date of some event
+  - &lt;b&gt;tm&lt;/b&gt;: Time stamp of some event
+  - &lt;b&gt;cat&lt;/b&gt;: Categorical variable as a character string (potentially encoded from an ID field)
+  - &lt;b&gt;str&lt;/b&gt;: String variable usually used for describing a characteristic 
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+&lt;b&gt;Level 2: Measure Subjects&lt;/b&gt;
+
+  - &lt;b&gt;buyer&lt;/b&gt;: public procuring entity
+  - &lt;b&gt;firm&lt;/b&gt;: firm entity
+  - &lt;b&gt;tender&lt;/b&gt;: auction 
+  - &lt;b&gt;payment&lt;/b&gt;: payment transaction
+  - &lt;b&gt;purchase&lt;/b&gt;: signed contract
+  - &lt;b&gt;offer&lt;/b&gt;: offer submitted to the auction
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+&lt;b&gt;Level 3-n: Details&lt;/b&gt;
+
+  - &lt;b&gt;region&lt;/b&gt;: region of origin
+  - &lt;b&gt;city&lt;/b&gt;: city of origin
+  - &lt;b&gt;total&lt;/b&gt;: total value
+  - &lt;b&gt;diff_ack_pay&lt;/b&gt;: difference between payment acknowledgment and actual payment
+  - &lt;b&gt;send&lt;/b&gt;: date of start sending offers 
+  - &lt;b&gt;unspsc&lt;/b&gt;: UNSPSC item classification code 
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+&lt;b&gt;Putting it all together&lt;/b&gt;
+
+  - &lt;b&gt;id_firm_tax&lt;/b&gt;: unique tax identifier for each firm
+  - &lt;b&gt;str_firm_city&lt;/b&gt;: character string to define the origin city for each firm
+  - &lt;b&gt;str_buyer_region&lt;/b&gt;: character string to define the origin region for each firm
+  - &lt;b&gt;ind_offer_win&lt;/b&gt;: 1 if offer was selected 
+  - &lt;b&gt;amt_offer_total&lt;/b&gt;: total amount offered 
+  - &lt;b&gt;id_item_unspsc&lt;/b&gt;: unique UNSPSC identifier for each item 
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+### Variable Harmonization
+
+]
+
+.right-wide[
+📋 Checklist:
+  - &lt;b&gt;Dates&lt;/b&gt;: all dates ("dt_") need to be formatted as such, [lubridate](https://lubridate.tidyverse.org/) package is key: `lubridate::dmy()`
+  - &lt;b&gt;Numeric&lt;/b&gt;: all numeric values ("n_"|"amt_") need to be formatted as such, `as.numeric()` (⚠️ sometimes decimal separators are coded with commas)
+  - &lt;b&gt;Strings&lt;/b&gt;: 
+    - `stringr::str_squish()` removes whitespace before and after strings, and reduced repeated interior whitespace to a single space 
+    - `stringr::str_to_lower()` converts to lowercase
+    - `stringr::str_remove_all("[^[:alnum:]]")` can be used to remove all non-alphanumeric characters
+  - &lt;b&gt;Factors&lt;/b&gt;: all factor variables ("ind_") need to be formatted as such, `as.factor()`
+  - &lt;b&gt;Coded Identifiers&lt;/b&gt;: all IDs ("id_"), when standardized, should be verified. Example: tax identifiers
+]
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Integration ⛓
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/first_data_harmonization.jpeg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/second_data_integration.jpeg")
+background-size: cover
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+  1. ✅ &lt;b&gt;Understand Your Data&lt;/b&gt;: familiarize yourself with the structure, format, and quality of your data sources.
+
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+  1. ✅ &lt;b&gt;Understand Your Data&lt;/b&gt;: familiarize yourself with the structure, format, and quality of your data sources.
+  2. ❌ &lt;b&gt;Lack of Familiarity&lt;/b&gt;: &lt;u&gt;avoid&lt;/u&gt; integrating data when its quality and structure are in doubt.
+
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+  1. ✅ &lt;b&gt;Understand Your Data&lt;/b&gt;: familiarize yourself with the structure, format, and quality of your data sources.
+  2. ❌ &lt;b&gt;Lack of Familiarity&lt;/b&gt;: &lt;u&gt;avoid&lt;/u&gt; integrating data when its quality and structure are in doubt.
+  3. ✅ &lt;b&gt;Define Clear Objectives&lt;/b&gt;: clearly define the purpose of merging or integrating (💡 you can always map the data).
+
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+  1. ✅ &lt;b&gt;Understand Your Data&lt;/b&gt;: familiarize yourself with the structure, format, and quality of your data sources.
+  2. ❌ &lt;b&gt;Lack of Familiarity&lt;/b&gt;: &lt;u&gt;avoid&lt;/u&gt; integrating data when its quality and structure are in doubt.
+  3. ✅ &lt;b&gt;Define Clear Objectives&lt;/b&gt;: clearly define the purpose of merging or integrating (💡 you can always map the data).
+  4. ✅ &lt;b&gt;Ensure Consistent Data Types&lt;/b&gt;: before merging, make sure that columns you're joining on have consistent data types in both tables.
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+⛓ Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+📋 Checklist:
+  1. ✅ &lt;b&gt;Understand Your Data&lt;/b&gt;: familiarize yourself with the structure, format, and quality of your data sources.
+  2. ❌ &lt;b&gt;Lack of Familiarity&lt;/b&gt;: &lt;u&gt;avoid&lt;/u&gt; integrating data when its quality and structure are in doubt.
+  3. ✅ &lt;b&gt;Define Clear Objectives&lt;/b&gt;: clearly define the purpose of merging or integrating (💡 you can always map the data).
+  4. ✅ &lt;b&gt;Ensure Consistent Data Types&lt;/b&gt;: before merging, make sure that columns you're joining on have consistent data types in both tables.
+  5. ✅ &lt;b&gt;Document the Process&lt;/b&gt;: ensure that every step, decision, and assumption made during the integration process is well-documented.
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+#### The Ultimate Triad of Merging
+]
+--
+.right-wide[
+&lt;ol start="1"&gt;
+  &lt;li&gt;🔑 &lt;b&gt;Key Matching&lt;/b&gt;: ensure that you have &lt;u&gt;&lt;b&gt;unique&lt;/b&gt;&lt;/u&gt; and &lt;u&gt;&lt;b&gt;non-missing&lt;/b&gt;&lt;/u&gt; keys to match on. &lt;/li&gt;
+&lt;/ol&gt;
+]
 
 
+--
+.right-wide[
+&lt;ol start="2"&gt;
+  &lt;li&gt;⚖️ &lt;b&gt;Same Granularity Level&lt;/b&gt; avoid merging data directly if they are not at the  &lt;u&gt;&lt;b&gt;same level of granularity&lt;/b&gt;&lt;/u&gt;. Aggregate or disaggregate data to the appropriate level before merging. &lt;/li&gt;
+&lt;/ol&gt;
+]
 
+--
+.right-wide[
+&lt;ol start="3"&gt;
+  &lt;li&gt;⬅️ &lt;b&gt;99% Left Joins&lt;/b&gt;: using a left join can ensure you retain all records from your primary (left) table. This ensures you &lt;u&gt;&lt;b&gt;don't lose any data&lt;/b&gt;&lt;/u&gt;, but it can introduce null values for unmatched records. &lt;/li&gt;
+&lt;/ol&gt;
+]
+
+---
+
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+🤔 What happens if we don't have a clear, consistent and unique ket to match on?
+
+]
+--
+.right-wide[
+
+&lt;i&gt;Example: say that we want to match sector names with ISIC standardized sector codes&lt;/i&gt;
+
+]
+---
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+🤔 What happens if we don't have a clear, consistent and unique ket to match on?
+
+&lt;i&gt;Example: say that we want to match sector names with ISIC standardized sector codes&lt;/i&gt;
+
+  1. 🎶 Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (&lt;i&gt;Example: "Retail and Services Sector" vs "Retail and Services"&lt;/i&gt;)
+  
+]
+---
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+🤔 What happens if we don't have a clear, consistent and unique ket to match on?
+
+&lt;i&gt;Example: say that we want to match sector names with ISIC standardized sector codes&lt;/i&gt;
+
+
+  1. 🎶 Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (&lt;i&gt;Example: "Retail and Services Sector" vs "Retail and Services"&lt;/i&gt;).
+  2. 🧩 `library(stringdist)` provides several methods to compute string distances and perform approximate string matching, or you can use the `library(fuzzyjoin)` that performs joins using the same methods. 
+  
+]
+
+---
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+🤔 What happens if we don't have a clear, consistent and unique ket to match on?
+
+&lt;i&gt;Example: say that we want to match sector names with ISIC standardized sector codes&lt;/i&gt;
+
+  1. 🎶 Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (&lt;i&gt;Example: "Retail and Services Sector" vs "Retail and Services"&lt;/i&gt;).
+  2. 🧩 `library(stringdist)` provides several methods to compute string distances and perform approximate string matching, or you can use the `library(fuzzyjoin)` that performs joins using the same methods. 
+  3. 🤖 [ChatGPT](https://chat.openai.com/) (3.5 or 4 is better)... say no more!
+  
+]
+
+---
+
+class: inverse
+
+# Task 3: Excercise about Aggregating an Joining at different levels
+
+<div class="countdown" id="timer_ccebf996" data-update-every="1" tabindex="0" style="top:0;right:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+Ideas? Need to fill this yet. 
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Inconsistencies and Sample Unbalances ⚠️
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/outlier.jpeg")
+background-size: cover
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+
+]
+
+--
+
+.right-wide[
+🏷 There are several &lt;b&gt;naming conventions&lt;/b&gt; [out there](https://bookdown.org/content/d1e53ac9-28ce-472f-bc2c-f499f18264a3/names.html). Here, we will follow the so-called "snake_case".
+  - These names are all lower case with underscore between the name. My name in &lt;i&gt;snake_case&lt;/i&gt; would be &lt;i&gt;ruggero_doino&lt;i/&gt;.
+]
+
+--
+
+.right-wide[
+📖 &lt;b&gt;Controlled Vocabulary&lt;/b&gt; "The basic idea of controlled vocabularies is to define upfront a set of words, phrases, or stubs with well-defined meanings which can be used to index information." ([Emily Redierer](https://emilyriederer.netlify.app/post/column-name-contracts/))
+]
+
+--
+
+.right-wide[
+.center[
+&lt;img src="https://i.imgflip.com/7xbz4n.jpg" width="320" height="160"/&gt;
+]
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+### Outliers
+
+]
+
+---
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+### Outliers
+### Sample Imbalances
+
+]
+
+---
+
+class: inverse
+
+# Task 3: Excercise about Aggregating an Joining at different levels
+
+<div class="countdown" id="timer_18756ace" data-update-every="1" tabindex="0" style="top:0;right:0;">
+<div class="countdown-controls"><button class="countdown-bump-down">&minus;</button><button class="countdown-bump-up">&plus;</button></div>
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+Ideas? Need to fill this yet. 
+
+---
+
+layout: false
+class: center
+
+.center[
+&lt;b&gt;Major Credits&lt;/b&gt; to :
+]
+
+.left[
+- Thiago Scot, Antoine Debb, Maria, and Tatiana for feedbacks.
+- Professor Florand from whom I used a lot of resources especially for building the presentation
+- Professor 
+- Blog Emily
+- Blog that I used for packages 
+- 
+]
+
+---
+
+layout: true
+class: middle, center
+
+---
+
+# THANKS!
+
+--
+
+.center[
+Time to help me now! 🙏
+]
+.center[
+&lt;img src="../img/logo/form_google.jpg" width="280" height="260"/&gt;
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

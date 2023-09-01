@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chile Payment Delay: preliminary results</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="css/nhsr.css" type="text/css" />
+    <link rel="stylesheet" href="css/nhsr-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, left, bottom
+
+# Chile Payment Delay: preliminary results
+----
+## **Ruggero Doino (RA - DIME3)**
+### 
+### Aug 2023
+
+---
+
+layout: true
+
+background-image: url(img/graphsgraphs/WB-WBG-horizontal-RGB-high.png)
+background-position: 2% 98%
+background-size: 20%
+---
+
+
+# &lt;u&gt;unweighted&lt;/u&gt; Avg Difference In Days Between Fecha Documento And Fecha Pago&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:unweighted avg difference in days between Fecha Documento and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;unweighted&lt;/u&gt; Avg Difference In Days Between Fecha Documento And Fecha Pago&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:unweighted avg difference in days between Fecha Documento and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;weighted&lt;/u&gt; Avg Difference In Days Between Fecha Documento And Fecha Pago&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:weighted avg difference in days between Fecha Documento and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;weighted&lt;/u&gt; Avg Difference In Days Between Fecha Documento And Fecha Pago&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:weighted avg difference in days between Fecha Documento and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_DOC_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_DOC_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;unweighted&lt;/u&gt; Avg Difference In Days Between Recepcion Conforme And Fecha Pago&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:unweighted avg difference in days between Recepcion Conforme and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;unweighted&lt;/u&gt; Avg Difference In Days Between Recepcion Conforme And Fecha Pago&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:unweighted avg difference in days between Recepcion Conforme and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;weighted&lt;/u&gt; Avg Difference In Days Between Recepcion Conforme And Fecha Pago&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:weighted avg difference in days between Recepcion Conforme and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_3_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+# &lt;u&gt;weighted&lt;/u&gt; Avg Difference In Days Between Recepcion Conforme And Fecha Pago&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`:weighted avg difference in days between Recepcion Conforme and Fecha Pago
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_AMT_PAY_ACK_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_AMT_PAY_ACK_DD_AVG_4_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+
+---
+
+# Two-Way Fixed Effects
+
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{year} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{1}LatePayer + \beta_{2}AfterTreatment + \beta_{3}LatePayer \times AfterTreatment\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: outcome of interest
+- `\(Late Payer\)`: dummy that takes value 1 if the (weighted) avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{year}\)`: set of fixed effects for the year you're in
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/First_stage_TREATMENT_30.png' width='55%'&gt;
+
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Mean]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/First_stage_TREATMENT_MEAN.png' width='65%'&gt;
+
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Median]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/First_stage_TREATMENT_MEDIAN.png' width='65%'&gt;
+
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[25th and 75th]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/First_stage_TREATMENT_25TH.png' width='65%'&gt;
+
+&lt;/div&gt;
+]]
+
+
+---
+
+
+
+#Dummy That Takes Value 1 If The Po Comes From A Tender&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the PO comes from a tender
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Po Comes From A Tender&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the PO comes from a tender
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_COMPETITIVE_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_COMPETITIVE_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_COMPETITIVE_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Po Was Issued To A Sme&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the PO was issued to a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Po Was Issued To A Sme&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + eta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the PO was issued to a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_MSME_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_MSME_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_MSME_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+
+---
+
+# Two-Way Fixed Effects
+
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{year} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{1}LatePayer + \beta_{2}AfterTreatment + \beta_{3}LatePayer \times AfterTreatment\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: outcome of interest.
+- `\(Late Payer\)`: dummy that takes value 1 if the (weighted) avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{year}\)`: set of fixed effects for the year you're in
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as a) Sin emisión automática, b) Convenio Marco, c) Microcompra, d) Compra Coordinada, e) Agil Compra
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_oc_TREATMENT_30.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Mean]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_oc_TREATMENT_MEAN.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Median]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_oc_TREATMENT_MEDIAN.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[25th and 75th]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_oc_TREATMENT_25TH.png' width='45%'&gt;
+&lt;/div&gt;
+]]
+
+
+---
+
+
+
+#Number Of Offers (Itemxlicitacion)&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: Number of Offers (ItemXLicitacion)
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Number Of Offers (Itemxlicitacion)&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: Number of Offers (ItemXLicitacion)
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_N_OFFERS_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_N_OFFERS_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_N_OFFERS_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Tender (Itemxlicitacion) Received Only One Offer&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the tender (ItemXLicitacion) received only one offer
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Tender (Itemxlicitacion) Received Only One Offer&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the tender (ItemXLicitacion) received only one offer
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_CAT_ONE_OFFER_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_CAT_ONE_OFFER_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_CAT_ONE_OFFER_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Offer (Itemxlicitacion) Was Bidded By A Sme&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the offer (ItemXLicitacion) was bidded by a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Offer (Itemxlicitacion) Was Bidded By A Sme&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the offer (ItemXLicitacion) was bidded by a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_BID_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_BID_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_BID_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Tender (Itemxlicitacion) Was Won By A Sme&lt;u&gt;(unweighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the tender (ItemXLicitacion) was won by a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theunweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_1_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_1_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_1_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_1_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_1_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_1_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_1_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+---
+
+
+
+#Dummy That Takes Value 1 If The Tender (Itemxlicitacion) Was Won By A Sme&lt;u&gt;(weighted treatment)&lt;/u&gt;
+      
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{g} + \alpha_{T} + \alpha_{type} + \alpha_{buyer}\)` 
+&lt;/br&gt;
+`\(+ \beta_{-T{1}}Treated + \beta_{-(T{1} - 1)}Treated + ... + \beta_{-1}Treated + \beta_{1}Treated + ... + \beta_{T_{2}}Treated\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: dummy that takes value 1 if the tender (ItemXLicitacion) was won by a SME
+- `\(\alpha_{g}\)`: dummy that takes value 1 if `\(g = Late Payer\)`, where `\(Late Payer\)` is defined as in theweighted avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{t}\)`: set of fixed effects for the time period you're in, where `\(t\)` can take value as quarter, semester and year
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_2_TREATMENT_30.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_2_TREATMENT_30.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Mean]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_2_TREATMENT_MEAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_2_TREATMENT_MEAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[Median]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_2_TREATMENT_MEDIAN.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]
+
+.panel[.panel-name[25th and 75th]
+
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/DID_DT_YEAR_SHARE_MSMES_WIN_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_SEMESTER_SHARE_MSMES_WIN_2_TREATMENT_25TH.jpeg' width='38%'&gt;
+  &lt;img src='img/graphs/DID_DT_QUARTER_SHARE_MSMES_WIN_2_TREATMENT_25TH.jpeg' width='38%'&gt;  
+&lt;/div&gt;
+]]
+
+---
+
+# Two-Way Fixed Effects
+
+.panelset[
+
+  .panel[.panel-name[Estimating Equation]
+&lt;center&gt;
+&lt;/br&gt;
+&lt;/br&gt;
+`\(Y_{i} = \alpha_{year} + \alpha_{type} + \alpha_{buyer} + \alpha_{item}\)` 
+&lt;/br&gt;
+`\(+ \beta_{1}LatePayer + \beta_{2}AfterTreatment + \beta_{3}LatePayer \times AfterTreatment\)`
+&lt;/br&gt;
+`\(+ \epsilon_{i}\)`
+&lt;/br&gt;
+&lt;/center&gt;
+.reduce[
+
+- where there are `\(T_{1}\)` periods before the treatment period, and `\(T_{2}\)` periods afterwards
+- `\(Y\)`: outcome of interest.
+- `\(Late Payer\)`: dummy that takes value 1 if the (weighted) avg  difference between Recepcion Conforme and Fecha Pago in 2019 is a) greater than 30, b) greater than the sample mean, c) greater than the sample median, d) greater than the `\(75^{th}\)` percentile
+- `\(\alpha_{year}\)`: set of year fixed effects 
+- `\(\alpha_{type}\)`: set of fixed effects for type of PO that was issued such as 'L1' 'LE' 'LP' 'LQ' 'LR' 'LS' 'E2' 'CO' 'B2' 'H2' 'I2'
+- `\(\alpha_{buyer}\)`: set of fixed effects for the buyer who issued the PO
+- `\(\alpha_{item}\)`: set of fixed effects for the item unspsc code (6 digits)
+- `\(\epsilon\)`: robust standard errors clustered at the buyer level
+
+]
+  
+]
+  .panel[.panel-name[30 days]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_offers_TREATMENT_30.png' width='45%'&gt;
+  &lt;img src='img/graphs/Second_stage_msmes_TREATMENT_30.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Mean]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_offers_TREATMENT_MEAN.png' width='45%'&gt;
+  &lt;img src='img/graphs/Second_stage_msmes_TREATMENT_MEAN.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[Median]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_offers_TREATMENT_MEDIAN.png' width='45%'&gt;
+  &lt;img src='img/graphs/Second_stage_msmes_TREATMENT_MEDIAN.png' width='45%'&gt;
+&lt;/div&gt;
+]
+
+  .panel[.panel-name[25th and 75th]
+&lt;/br&gt;
+&lt;/br&gt;
+&lt;div style='display: flex; justify-content: space-around;'&gt;
+  &lt;img src='img/graphs/Second_stage_offers_TREATMENT_25TH.png' width='45%'&gt;
+  &lt;img src='img/graphs/Second_stage_msmes_TREATMENT_25TH.png' width='45%'&gt;
+&lt;/div&gt;
+]]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "googlecode",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

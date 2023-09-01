@@ -612,7 +612,7 @@ data_offer <- fread(
   input = file.path(raw_data, "offer_level.csv"),
   encoding = "Latin-1",
   stringsAsFactors = TRUE, 
-  colClasses = c("numeric", "character", "factor"), 
+  colClasses = c(" |> ", "character", "factor"), 
   na.strings = c("N/A", "Unknown"),
   showProgress = TRUE
 )
@@ -988,6 +988,599 @@ background-size: cover
 ]
 .center[<img src="../img/logo/diagram_6.svg" width="650px"/>]
 
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Harmonization `r emo::ji("musical_notes")`
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/data_harmonization.jpeg")
+background-size: cover
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+--
+
+.right-wide[
+`r emo::ji("label")` There are several <b>naming conventions</b> [out there](https://bookdown.org/content/d1e53ac9-28ce-472f-bc2c-f499f18264a3/names.html). Here, we will follow the so-called "snake_case".
+  - These names are all lower case with underscore between the name. My name in <i>snake_case</i> would be <i>ruggero_doino<i/>.
+]
+
+--
+
+.right-wide[
+`r emo::ji("book")` <b>Controlled Vocabulary</b> "The basic idea of controlled vocabularies is to define upfront a set of words, phrases, or stubs with well-defined meanings which can be used to index information." ([Emily Redierer](https://emilyriederer.netlify.app/post/column-name-contracts/))
+]
+
+--
+
+.right-wide[
+.center[
+<img src="https://i.imgflip.com/7xbz4n.jpg" width="320" height="160"/>
+]
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+<b>Level 1: Measure Types</b>:
+
+  - <b>id</b>: Unique identified for an entity.
+  - <b>ind</b>: Binary 0 or 1 indicator or an event occurrence
+  - <b>n</b>: Count of quantity or event occurrence
+  - <b>amt</b>: Sum-able real number amount. That is, any non-count amount that is “denominator-free”
+  - <b>val</b>: Numeric variables that are not inherently sum-able
+  - <b>dt</b>: Date of some event
+  - <b>tm</b>: Time stamp of some event
+  - <b>cat</b>: Categorical variable as a character string (potentially encoded from an ID field)
+  - <b>str</b>: String variable usually used for describing a characteristic 
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+<b>Level 2: Measure Subjects</b>
+
+  - <b>buyer</b>: public procuring entity
+  - <b>firm</b>: firm entity
+  - <b>tender</b>: auction 
+  - <b>payment</b>: payment transaction
+  - <b>purchase</b>: signed contract
+  - <b>offer</b>: offer submitted to the auction
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+<b>Level 3-n: Details</b>
+
+  - <b>region</b>: region of origin
+  - <b>city</b>: city of origin
+  - <b>total</b>: total value
+  - <b>diff_ack_pay</b>: difference between payment acknowledgment and actual payment
+  - <b>send</b>: date of start sending offers 
+  - <b>unspsc</b>: UNSPSC item classification code 
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+
+]
+
+.right-wide[
+<b>Putting it all together</b>
+
+  - <b>id_firm_tax</b>: unique tax identifier for each firm
+  - <b>str_firm_city</b>: character string to define the origin city for each firm
+  - <b>str_buyer_region</b>: character string to define the origin region for each firm
+  - <b>ind_offer_win</b>: 1 if offer was selected 
+  - <b>amt_offer_total</b>: total amount offered 
+  - <b>id_item_unspsc</b>: unique UNSPSC identifier for each item 
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Harmonization
+
+.left-thin[
+
+### Naming Convention
+### Variable Harmonization
+
+]
+
+.right-wide[
+`r emo::ji("clipboard")` Checklist:
+  - <b>Dates</b>: all dates ("dt_") need to be formatted as such, [lubridate](https://lubridate.tidyverse.org/) package is key: `lubridate::dmy()`
+  - <b>Numeric</b>: all numeric values ("n_"|"amt_") need to be formatted as such, `as.numeric()` (`r emo::ji("warning")` sometimes decimal separators are coded with commas)
+  - <b>Strings</b>: 
+    - `stringr::str_squish()` removes whitespace before and after strings, and reduced repeated interior whitespace to a single space 
+    - `stringr::str_to_lower()` converts to lowercase
+    - `stringr::str_remove_all("[^[:alnum:]]")` can be used to remove all non-alphanumeric characters
+  - <b>Factors</b>: all factor variables ("ind_") need to be formatted as such, `as.factor()`
+  - <b>Coded Identifiers</b>: all IDs ("id_"), when standardized, should be verified. Example: tax identifiers
+]
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Integration `r emo::ji("chains")`
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/first_data_harmonization.jpeg")
+background-size: cover
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/second_data_integration.jpeg")
+background-size: cover
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+  1. `r emo::ji("white_check_mark")` <b>Understand Your Data</b>: familiarize yourself with the structure, format, and quality of your data sources.
+
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+  1. `r emo::ji("white_check_mark")` <b>Understand Your Data</b>: familiarize yourself with the structure, format, and quality of your data sources.
+  2. `r emo::ji("cross_mark")` <b>Lack of Familiarity</b>: <u>avoid</u> integrating data when its quality and structure are in doubt.
+
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+  1. `r emo::ji("white_check_mark")` <b>Understand Your Data</b>: familiarize yourself with the structure, format, and quality of your data sources.
+  2. `r emo::ji("cross_mark")` <b>Lack of Familiarity</b>: <u>avoid</u> integrating data when its quality and structure are in doubt.
+  3. `r emo::ji("white_check_mark")` <b>Define Clear Objectives</b>: clearly define the purpose of merging or integrating (`r emo::ji("light_bulb")` you can always map the data).
+
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+  1. `r emo::ji("white_check_mark")` <b>Understand Your Data</b>: familiarize yourself with the structure, format, and quality of your data sources.
+  2. `r emo::ji("cross_mark")` <b>Lack of Familiarity</b>: <u>avoid</u> integrating data when its quality and structure are in doubt.
+  3. `r emo::ji("white_check_mark")` <b>Define Clear Objectives</b>: clearly define the purpose of merging or integrating (`r emo::ji("light_bulb")` you can always map the data).
+  4. `r emo::ji("white_check_mark")` <b>Ensure Consistent Data Types</b>: before merging, make sure that columns you're joining on have consistent data types in both tables.
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+
+`r emo::ji("chains")` Integrating or merging data from different sources or tables is a common task in data management and analytics. 
+
+`r emo::ji("clipboard")` Checklist:
+  1. `r emo::ji("white_check_mark")` <b>Understand Your Data</b>: familiarize yourself with the structure, format, and quality of your data sources.
+  2. `r emo::ji("cross_mark")` <b>Lack of Familiarity</b>: <u>avoid</u> integrating data when its quality and structure are in doubt.
+  3. `r emo::ji("white_check_mark")` <b>Define Clear Objectives</b>: clearly define the purpose of merging or integrating (`r emo::ji("light_bulb")` you can always map the data).
+  4. `r emo::ji("white_check_mark")` <b>Ensure Consistent Data Types</b>: before merging, make sure that columns you're joining on have consistent data types in both tables.
+  5. `r emo::ji("white_check_mark")` <b>Document the Process</b>: ensure that every step, decision, and assumption made during the integration process is well-documented.
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+
+]
+
+.right-wide[
+#### The Ultimate Triad of Merging
+]
+--
+.right-wide[
+<ol start="1">
+  <li>`r emo::ji("key")` <b>Key Matching</b>: ensure that you have <u><b>unique</b></u> and <u><b>non-missing</b></u> keys to match on. </li>
+</ol>
+]
 
 
+--
+.right-wide[
+<ol start="2">
+  <li>`r emo::ji("balance_scale")` <b>Same Granularity Level</b> avoid merging data directly if they are not at the  <u><b>same level of granularity</b></u>. Aggregate or disaggregate data to the appropriate level before merging. </li>
+</ol>
+]
 
+--
+.right-wide[
+<ol start="3">
+  <li>`r emo::ji("left_arrow")` <b>99% Left Joins</b>: using a left join can ensure you retain all records from your primary (left) table. This ensures you <u><b>don't lose any data</b></u>, but it can introduce null values for unmatched records. </li>
+</ol>
+]
+
+---
+
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+`r emo::ji("thinking_face")` What happens if we don't have a clear, consistent and unique ket to match on?
+
+]
+--
+.right-wide[
+
+<i>Example: say that we want to match sector names with ISIC standardized sector codes</i>
+
+]
+---
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+`r emo::ji("thinking_face")` What happens if we don't have a clear, consistent and unique ket to match on?
+
+<i>Example: say that we want to match sector names with ISIC standardized sector codes</i>
+
+  1. `r emo::ji("musical_notes")` Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (<i>Example: "Retail and Services Sector" vs "Retail and Services"</i>)
+  
+]
+---
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+`r emo::ji("thinking_face")` What happens if we don't have a clear, consistent and unique ket to match on?
+
+<i>Example: say that we want to match sector names with ISIC standardized sector codes</i>
+
+
+  1. `r emo::ji("musical_notes")` Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (<i>Example: "Retail and Services Sector" vs "Retail and Services"</i>).
+  2. `r emo::ji("puzzle")` `library(stringdist)` provides several methods to compute string distances and perform approximate string matching, or you can use the `library(fuzzyjoin)` that performs joins using the same methods. 
+  
+]
+
+---
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Integration
+
+.left-thin[
+
+### Merging
+### Fuzzy Matching
+
+]
+
+.right-wide[
+
+`r emo::ji("thinking_face")` What happens if we don't have a clear, consistent and unique ket to match on?
+
+<i>Example: say that we want to match sector names with ISIC standardized sector codes</i>
+
+  1. `r emo::ji("musical_notes")` Data Harmonization is key here. Ensure that texts are clean following the best practices, and sometimes you just need to do some further steps (<i>Example: "Retail and Services Sector" vs "Retail and Services"</i>).
+  2. `r emo::ji("puzzle")` `library(stringdist)` provides several methods to compute string distances and perform approximate string matching, or you can use the `library(fuzzyjoin)` that performs joins using the same methods. 
+  3. `r emo::ji("robot")` [ChatGPT](https://chat.openai.com/) (3.5 or 4 is better)... say no more!
+  
+]
+
+---
+
+class: inverse
+
+# Task 3: Excercise about Aggregating an Joining at different levels
+
+```{r, echo = FALSE}
+countdown(minutes = 15, top = 0)
+```
+
+Ideas? Need to fill this yet. 
+
+---
+
+layout: false
+class: title-slide-section-red, middle
+
+# Data Inconsistencies and Sample Unbalances `r emo::ji("warning")`
+
+---
+
+class: title-slide, top, left, inverse
+background-image: url("../img/logo/outlier.jpeg")
+background-size: cover
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+
+]
+
+--
+
+.right-wide[
+`r emo::ji("label")` There are several <b>naming conventions</b> [out there](https://bookdown.org/content/d1e53ac9-28ce-472f-bc2c-f499f18264a3/names.html). Here, we will follow the so-called "snake_case".
+  - These names are all lower case with underscore between the name. My name in <i>snake_case</i> would be <i>ruggero_doino<i/>.
+]
+
+--
+
+.right-wide[
+`r emo::ji("book")` <b>Controlled Vocabulary</b> "The basic idea of controlled vocabularies is to define upfront a set of words, phrases, or stubs with well-defined meanings which can be used to index information." ([Emily Redierer](https://emilyriederer.netlify.app/post/column-name-contracts/))
+]
+
+--
+
+.right-wide[
+.center[
+<img src="https://i.imgflip.com/7xbz4n.jpg" width="320" height="160"/>
+]
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+### Outliers
+
+]
+
+---
+
+<div class="my-footer"><img src="../img/logo/WBG_Vertical-RGB-high.png" style="height: 60px;"/></div> 
+
+# Data Inconsistencies and Sample Unbalances
+
+.left-thin[
+
+### Missing Values
+### Outliers
+### Sample Imbalances
+
+]
+
+---
+
+class: inverse
+
+# Task 3: Excercise about Aggregating an Joining at different levels
+
+```{r, echo = FALSE}
+countdown(minutes = 15, top = 0)
+```
+
+Ideas? Need to fill this yet. 
+
+---
+
+layout: false
+class: center
+
+.center[
+<b>Major Credits</b> to :
+]
+
+.left[
+- Thiago Scot, Antoine Debb, Maria, and Tatiana for feedbacks.
+- Professor Florand from whom I used a lot of resources especially for building the presentation
+- Professor 
+- Blog Emily
+- Blog that I used for packages 
+- 
+]
+
+---
+
+layout: true
+class: middle, center
+
+---
+
+# THANKS!
+
+.center[
+Time to help me now! `r emo::ji("folded_hands")`
+]
+.center[
+<img src="../img/logo/form_google.jpg" width="280" height="260"/>
+]
